@@ -1,18 +1,28 @@
 package com.ecommerce.microservicecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+//@JsonIgnoreProperties(value = {"buyingPrice", "id"})
+@JsonFilter("myDynamicFilter")
 public class Product {
 	
 	private int id;
 	private String name;
 	private double price;
 	
+	//@JsonIgnore
+	private double buyingPrice;
+	
 	public Product() {}
 	
-	public Product(int id, String name, double price) {
+	public Product(int id, String name, double price, double buyingPrice) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.buyingPrice = buyingPrice;
 	}
 
 	public int getId() {
@@ -39,6 +49,14 @@ public class Product {
 		this.price = price;
 	}
 
+	public double getBuyingPrice() {
+		return buyingPrice;
+	}
+
+	public void setBuyingPrice(double buyingPrice) {
+		this.buyingPrice = buyingPrice;
+	}
+	
 	@Override
 	public String toString() {
 		//return "Product [id=" + id + ", name=" + name + ", price=" + price + "]";
@@ -46,6 +64,7 @@ public class Product {
 				"id=" + id +
 				", name=" + name + 
 				", price=" + price + 
+				", buyingPrice=" + buyingPrice + 
 				"}";
 	}
 
