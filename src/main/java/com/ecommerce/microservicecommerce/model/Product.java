@@ -3,6 +3,9 @@ package com.ecommerce.microservicecommerce.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,7 +19,11 @@ public class Product {
 	@Id
 	@GeneratedValue
 	private int id;
+	
+	@Length(min=3, max=20, message = "Length has to be between 3 & 20 char")
 	private String name;
+	
+	@Min(value = 1)
 	private double price;
 	
 	//@JsonIgnore
