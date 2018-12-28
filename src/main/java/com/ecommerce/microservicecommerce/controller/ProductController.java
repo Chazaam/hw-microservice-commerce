@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -49,6 +51,19 @@ public class ProductController {
 		return productDao.findById(id);
 	}
 	
+	//products/{name}
+	@GetMapping(value = "products/search/{name}")
+	public List<Product> retrieveProductByName(@PathVariable String name) {
+		return productDao.findByNameLike("%" + name + "%");
+	}
+	
+	//products/greaterthan/{priceMin}
+		@GetMapping(value = "products/greaterthan/{priceMin}")
+		public List<Product> retrieveProductMoreExpensiveThan(@PathVariable double priceMin){
+			//return productDao.findByPriceGreaterThan(priceMin);
+			return productDao.searchExpensiveProduct(priceMin);
+		}
+	
 	//products
 	@PostMapping(value = "products")
 	public ResponseEntity<Void> createProduct(@RequestBody Product product) {
@@ -67,11 +82,16 @@ public class ProductController {
 		return ResponseEntity.created(location).build();
 	}
 	
-	//products/greaterthan/{priceMin}
-	@GetMapping(value = "products/greaterthan/{priceMin}")
-	public List<Product> retrieveProductMoreExpensiveThan(@PathVariable double priceMin){
-		//return productDao.findByPriceGreaterThan(priceMin);
-		return productDao.searchExpensiveProduct(priceMin);
+	@PutMapping(value = "produits")
+	public void updateProduct(@RequestBody Product product) {
+		productDao.save(product);
 	}
+	
+	@DeleteMapping(value = "products/{id}")
+	public void deleteProduct(@PathVariable int id) {
+		productDao.deleteById(id);
+	}
+	
+	
 	
 }

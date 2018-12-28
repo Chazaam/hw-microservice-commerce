@@ -16,4 +16,7 @@ public interface ProductDao extends JpaRepository <Product, Integer>{
 	
 	@Query("SELECT id, name, price FROM Product p where p.price > :priceMin")
 	List<Product> searchExpensiveProduct(@Param("priceMin") double priceMin);
+	
+	List<Product> findByNameLike(String name);
+	
 }
