@@ -1,13 +1,20 @@
 package com.ecommerce.microservicecommerce.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+//@JsonFilter("myDynamicFilter")
 //@JsonIgnoreProperties(value = {"buyingPrice", "id"})
-@JsonFilter("myDynamicFilter")
+@Entity
 public class Product {
-	
+	@Id
+	@GeneratedValue
 	private int id;
 	private String name;
 	private double price;
@@ -18,7 +25,6 @@ public class Product {
 	public Product() {}
 	
 	public Product(int id, String name, double price, double buyingPrice) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;

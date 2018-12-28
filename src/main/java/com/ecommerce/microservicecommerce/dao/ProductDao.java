@@ -1,15 +1,19 @@
 package com.ecommerce.microservicecommerce.dao;
-
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import com.ecommerce.microservicecommerce.model.Product;
 
-public interface ProductDao {
-
-	public List<Product> findAll();
+@Repository
+public interface ProductDao extends JpaRepository <Product, Integer>{
 	
-	public Product findById(int id);
+	Product findById(int id);
 	
-	public Product save(Product product);
+	List<Product> findByPriceGreaterThan(double price);
 	
+	@Query("SELECT id, name, price FROM Product p where p.price > :priceMin")
+	List<Product> searchExpensiveProduct(@Param("priceMin") double priceMin);
 }

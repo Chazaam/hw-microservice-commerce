@@ -26,11 +26,11 @@ public class ProductController {
 	private ProductDao productDao;
 	
 	//products
-	/*@GetMapping(value = "products")
+	@GetMapping(value = "products")
 	public List<Product> productsList(){
 		return productDao.findAll();
-	}*/
-	@GetMapping(value = "products")
+	}
+	/*@GetMapping(value = "products")
 	public MappingJacksonValue productsList() {
 		List<Product> products = productDao.findAll();
 		
@@ -41,8 +41,7 @@ public class ProductController {
 		filteredProducts.setFilters(filtersList);
 		
 		return filteredProducts;
-	}
-	
+	}*/
 	
 	//products/{id}
 	@GetMapping(value = "products/{id}")
@@ -66,6 +65,13 @@ public class ProductController {
 				.toUri();
 		
 		return ResponseEntity.created(location).build();
+	}
+	
+	//products/greaterthan/{priceMin}
+	@GetMapping(value = "products/greaterthan/{priceMin}")
+	public List<Product> retrieveProductMoreExpensiveThan(@PathVariable double priceMin){
+		//return productDao.findByPriceGreaterThan(priceMin);
+		return productDao.searchExpensiveProduct(priceMin);
 	}
 	
 }
