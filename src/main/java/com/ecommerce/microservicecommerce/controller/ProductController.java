@@ -24,6 +24,10 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = "Product Management")
 @RestController
 public class ProductController {
 
@@ -32,6 +36,7 @@ public class ProductController {
 	
 /* GET */
 	//products
+	@ApiOperation(value = "Retrieve a product list")
 	@GetMapping(value = "products")
 	public List<Product> productsList(){
 		return productDao.findAll();
